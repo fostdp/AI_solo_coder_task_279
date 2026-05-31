@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>垃圾分类AR模拟</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>♻️ 垃圾分类AR模拟</h1>
+            <div class="score-board">
+                <span>得分: <strong id="score">0</strong></span>
+                <span id="timerDisplay" class="hidden">⏱️ <strong id="timer">60</strong>s</span>
+                <span>正确率: <strong id="accuracy">0%</strong></span>
+            </div>
+        </div>
+        
+        <div class="ar-container">
+            <video id="camera" autoplay playsinline muted></video>
+            <canvas id="gameCanvas"></canvas>
+            <div id="startOverlay" class="overlay">
+                <div class="overlay-content start-content">
+                    <h2>🎮 开始游戏</h2>
+                    
+                    <div class="setting-group">
+                        <label>📍 选择地区标准</label>
+                        <select id="regionSelect">
+                            <option value="national">国家标准</option>
+                            <option value="shanghai">上海标准</option>
+                            <option value="beijing">北京标准</option>
+                            <option value="guangzhou">广州标准</option>
+                            <option value="shenzhen">深圳标准</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label>🎯 选择游戏模式</label>
+                        <div class="mode-buttons">
+                            <button class="mode-btn active" data-mode="endless">♾️ 无尽模式</button>
+                            <button class="mode-btn" data-mode="challenge">⏱️ 限时挑战</button>
+                        </div>
+                        <div id="challengeSettings" class="hidden">
+                            <label>选择时长：</label>
+                            <select id="timeSelect">
+                                <option value="30">30秒</option>
+                                <option value="60" selected>60秒</option>
+                                <option value="90">90秒</option>
+                                <option value="120">120秒</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button id="startBtn" class="start-game-btn">开始游戏</button>
+                </div>
+            </div>
+            <div id="messageOverlay" class="overlay hidden">
+                <div class="overlay-content message-content"></div>
+            </div>
+            <div id="gameOverOverlay" class="overlay hidden">
+                <div class="overlay-content gameover-content">
+                    <h2>🏆 游戏结束</h2>
+                    <div class="final-stats">
+                        <p>最终得分: <strong id="finalScore">0</strong></p>
+                        <p>分类次数: <strong id="finalTotal">0</strong></p>
+                        <p>正确率: <strong id="finalAccuracy">0%</strong></p>
+                    </div>
+                    <button id="playAgainBtn">再来一局</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bins-container">
+            <div class="bin" data-type="recyclable">
+                <div class="bin-icon">♻️</div>
+                <div class="bin-label">可回收物</div>
+            </div>
+            <div class="bin" data-type="kitchen">
+                <div class="bin-icon">🍎</div>
+                <div class="bin-label">厨余垃圾</div>
+            </div>
+            <div class="bin" data-type="harmful">
+                <div class="bin-icon">☠️</div>
+                <div class="bin-label">有害垃圾</div>
+            </div>
+            <div class="bin" data-type="other">
+                <div class="bin-icon">🗑️</div>
+                <div class="bin-label">其他垃圾</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="pauseBtn">⏸️ 暂停</button>
+            <button id="restartBtn">🔄 重新开始</button>
+            <button id="knowledgeBtn">📚 知识卡片</button>
+            <button id="recordsBtn">📊 游戏记录</button>
+        </div>
+    </div>
+    
+    <div id="recordsModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📊 游戏记录</h2>
+            <div id="recordsList" class="records-list"></div>
+        </div>
+    </div>
+    
+    <div id="knowledgeModal" class="modal hidden">
+        <div class="modal-content knowledge-content">
+            <span class="close">&times;</span>
+            <h2>📚 垃圾分类知识</h2>
+            <div class="knowledge-tabs">
+                <button class="tab-btn active" data-tab="process">处理流程</button>
+                <button class="tab-btn" data-tab="guide">分类指南</button>
+                <button class="tab-btn" data-tab="tips">分类技巧</button>
+            </div>
+            <div id="knowledgeContent" class="knowledge-body"></div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
